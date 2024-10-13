@@ -3,14 +3,24 @@ package com.example.publicaciones.repository
 import com.example.publicaciones.dao.PublicationDao
 import com.example.publicaciones.dao.UserDao
 import com.example.publicaciones.model.Publicaciones
+import com.example.publicaciones.model.PublicationWithUser
 import com.example.publicaciones.model.Usuarios
+import kotlinx.coroutines.flow.Flow
 
 class PublicationRepository(private val publicationDao: PublicationDao) {
     suspend fun insertar(publication: Publicaciones) {
         publicationDao.insert(publication)
     }
 
-    suspend fun getAllPublications(): List<Publicaciones> {
+    suspend fun update(publication: Publicaciones){
+        publicationDao.update(publication)
+    }
+
+    fun getPublicationsByUser(userId: Int): Flow<List<Publicaciones>> {
+        return publicationDao.getPublicationsByUserId(userId)
+    }
+
+    fun getAllPublications(): Flow<List<Publicaciones>> {
         return publicationDao.getAllPublications()
     }
 
@@ -22,4 +32,7 @@ class PublicationRepository(private val publicationDao: PublicationDao) {
         publicationDao.delete(publication) // Llamada al método delete del DAO
     }
 
+    fun getPublicationsWithUsers(): Flow<List<PublicationWithUser>> {
+        return publicationDao.getPublicationsWithUsers()
+    }
 }

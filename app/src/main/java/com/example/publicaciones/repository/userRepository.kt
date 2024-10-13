@@ -3,13 +3,18 @@ package com.example.publicaciones.repository
 import com.example.publicaciones.dao.UserDao
 import com.example.publicaciones.model.UserPublications
 import com.example.publicaciones.model.Usuarios
+import kotlinx.coroutines.flow.Flow
 
 class UserRepository(private val userDao: UserDao) {
-    suspend fun insertar(user: Usuarios) {
-        userDao.insert(user)
+    suspend fun insertar(user: Usuarios): Long {
+        return userDao.insert(user)
     }
 
-    suspend fun getAllUsers(): List<Usuarios> {
+    suspend fun update(user: Usuarios) {
+        userDao.update(user)
+    }
+
+    fun getAllUsers(): Flow<List<Usuarios>> {
         return userDao.getAllUsers()
     }
 
@@ -21,7 +26,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.delete(user) // Llamada al método delete del DAO
     }
 
-    suspend fun getUserPublications(userId: Int): List<UserPublications> {
-        return userDao.getUserPublications(userId) // Llamada al DAO
+    fun getUserPublicationsFlow(userId: Int): Flow<List<UserPublications>> {
+        return userDao.getUserPublications(userId)  // Observar publicaciones del usuario en tiempo real
     }
 }

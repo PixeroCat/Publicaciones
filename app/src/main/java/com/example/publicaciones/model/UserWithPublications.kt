@@ -7,7 +7,7 @@ data class UserPublications(
     @Embedded val user: Usuarios,
     @Relation(
         parentColumn = "id",
-        entityColumn = "usuarios_id"
+        entityColumn = "usuario_id"
     )
     val publications: List<Publicaciones>
 )
